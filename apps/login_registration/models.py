@@ -54,7 +54,7 @@ class UserManager(models.Manager):
         #return new user if all fields valid
         if len(errors) == 0:
             hashedpw = bcrypt.hashpw(postData['password'].encode(), bcrypt.gensalt())
-            newUser = User.objects.create(first_name=postData['first_name'], last_name=postData['last_name'], email=postData['email'], password=hashedpw, salt=pwsalt)
+            newUser = User.objects.create(first_name=postData['first_name'], last_name=postData['last_name'], email=postData['email'], password=hashedpw)
             return newUser
         #or return list of errors
         return errors
@@ -69,7 +69,6 @@ class User(models.Model):
     last_name = models.CharField(max_length=100)
     email = models.EmailField(max_length=254)
     password = models.CharField(max_length=255)
-    salt = models.CharField(max_length=255)
     birthdate = models.DateField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
