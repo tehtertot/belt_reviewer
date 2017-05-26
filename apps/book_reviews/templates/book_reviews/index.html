@@ -1,0 +1,28 @@
+{% extends 'book_reviews/base.html' %}
+{% load staticfiles %}
+{% block title %}Book Reviews{% endblock %}
+
+    {% block content1 %}
+      <h1>Recent Book Reviews</h1>
+      {% for review in reviews %}
+      {% with review.rating|stringformat:"s" as reviewStr %}
+      <p><span class="title"><a href="{% url 'books:book' id=review.book.id %}">{{review.book.title}}</a></span>&nbsp;<span class="rating">Rating: <img id="stars" src="{% static 'book_reviews/images/'|add:reviewStr|add:'.png' %}" alt=""> &nbsp; {% if request.session.user_id == review.user.id %}<a href="{% url 'books:deleteReview' id=review.id %}" class="delete">delete</a>{% endif %}</p>
+      {% endwith %}
+      <p class="posttime">Posted on: {{review.created_at|date:"F d, Y"}}</p>
+      <p class="review"><b><a href="{% url 'books:user' id=review.user.id %}">{{review.user.first_name}}</a> says: </b>{{review.review}}</p>
+      <hr>
+      {% endfor %}
+    {% endblock %}
+
+    {% block content2 %}
+      <br>
+      <h4>Other Books With Reviews:</h4>
+      <div class="booklist">
+        {% for book in books %}
+        <p><a href="{% url 'books:book' id=book.id %}">{{book.title}}</a></option></p>
+        {% endfor %}
+      </div>
+      <br>
+      <h4><a href="{% url 'books:add' %}">Add Book and Review</a></p></h4>
+      <br>
+    {% endblock %}

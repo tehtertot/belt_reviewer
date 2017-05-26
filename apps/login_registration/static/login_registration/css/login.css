@@ -1,0 +1,16 @@
+
+#tabs {
+  width: 25%;
+  margin: 5% auto;
+  background: lightgrey;
+  border-radius: 5%;
+}
+
+.tab-pane {
+  text-align: center;
+  padding: 0 5% 5% 5%;
+}
+
+label {
+  text-align: left;
+}

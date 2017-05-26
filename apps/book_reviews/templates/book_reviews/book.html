@@ -1,0 +1,39 @@
+{% extends 'book_reviews/base.html' %}
+{% load staticfiles %}
+{% block title %}Book Review{% endblock %}
+    {% block content1 %}
+    <h1>{{book.title}}</h1>
+    <h5>by {{book.authors.all|join:', '}}</h5>
+      <h1>Reviews</h1>
+      {% for review in book.reviews.all %}
+      {% with review.rating|stringformat:"s" as reviewStr %}
+      <p class="rating">Rating: <img id="stars" src="{% static 'book_reviews/images/'|add:reviewStr|add:'.png' %}" alt=""> &nbsp; {% if request.session.user_id == review.user.id %}<a href="{% url 'books:deleteReview' id=review.id %}" class="delete">delete</a>{% endif %}</p>
+      {% endwith %}
+      <p class="posttime">Posted on: {{review.created_at|date:"F d, Y"}}</p>
+      <p class="review"><b><a href="{% url 'books:user' id=review.user.id %}">{{review.user.first_name}}</a> says:</b> {{review.review}}</p>
+      <hr>
+      {% endfor %}
+    {% endblock %}
+
+    {% block content2 %}
+    {% if messages %}
+      <div class="errors">
+      {% for message in messages %}
+        <p>{{message}}</p>
+      {% endfor %}
+      </div>
+    {% endif %}
+    <h1>Add a Review</h1>
+      <form class="" action="{% url 'books:addReview' id=book.id %}" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+          <label>Review:<br>
+          <textarea name="review" rows="6" cols="50" class="form-control"></textarea></label>
+        </div>
+        <div class="form-group">
+          <label>Rating: <br>
+            <input type="range" name="rating" min="1" max="5" value="3" class="form-control" id ="starInputId" oninput="starOutputId.value = starInputId.value">&nbsp;<output name="star" id ="starOutputId">3</output> stars</label>
+        </div>
+        <input type="submit" name="" value="Submit Review">
+      </form>
+    {% endblock %}

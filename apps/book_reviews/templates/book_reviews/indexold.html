@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Book Reviews</title>
+    {% load staticfiles %}
+    <style media="screen">
+      .title { font-weight: bold; }
+      .rating { margin-left: 10px; }
+      .posttime { font-style: italic; }
+      .reviews { display: inline-block; width: 400px; vertical-align: top; }
+      .otherbooks { display: inline-block; width: 200px; }
+      img { width:60px; height:20px; }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <h1>Welcome, {{request.session.name}}!</h1>
+      <p><a href="{% url 'books:add' %}">Add Book and Review</a></p>
+    </div>
+    <div class="reviews">
+      <h1>Recent Book Reviews</h1>
+      {% for review in reviews %}
+      <p class="title"><a href="{% url 'books:book' id=review.book.id%}">{{review.book.title}}</a></p>
+      <p class="rating">Rating: <img src="{% static 'book_reviews/images/'|add:review.rating|stringformat:'i'|add:'.png' %}" alt="{{review.rating}}"></p>
+      <p class="review"><a href="{% url 'books:user' id=review.user.id %}">{{review.user.first_name}}</a> says: {{review.review}}</p>
+      <p class="posttime">Posted on: {{review.created_at|date:"F d, Y"}}</p>
+      <br>
+      {% endfor %}
+    </div>
+    <div class="otherbooks">
+      {% for book in books %}
+        <p><a href="viewBook/{{book.id}}">{{book.title}}</a></p>
+      {% endfor %}
+    </div>
+  </body>
+</html>

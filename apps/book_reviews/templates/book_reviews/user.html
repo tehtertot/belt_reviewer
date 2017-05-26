@@ -1,0 +1,16 @@
+{% extends 'book_reviews/base.html' %}
+{% block title %}User Info{% endblock %}
+
+  {% block content1 %}
+    <h4>User Alias: {{user.first_name}}</h4>
+    <h5>Name: {{user.first_name}} {{user.last_name}}</h5>
+    <h5>Email: {{user.email}}</h5>
+    <h5>Number of Reviews: {{user.reviews.all.count}}</h5>
+  {% endblock %}
+  
+  {% block content2 %}
+    <h5>Reviews posted on:</h5>
+    {% for review in user.reviews.all %}
+    <p><a href="{% url 'books:book' id=review.book.id %}">{{review.book.title}}</a></p>
+    {% endfor %}
+  {% endblock %}

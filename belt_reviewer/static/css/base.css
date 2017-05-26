@@ -1,0 +1,111 @@
+* {
+  box-sizing: border-box;
+  font-family: 'Handlee', cursive;
+}
+
+/* header section */
+.header {
+  width: 100%;
+  background: #00B25C;
+  padding: 0 1% 1% 1%;
+}
+  .pagetitle, .welcome, .logout {
+    display: inline-block;
+    background: #00B25C;
+    width: 33%;
+    margin: auto;
+  }
+  .pagetitle {
+    padding-left: 1%;
+    text-align: left;
+    font-family: 'Rock Salt', cursive;
+  }
+  .welcome {
+    text-align: center;
+    padding-right: 2%;
+    font-size: 1.3em;
+  }
+  .logout {
+    text-align: right;
+  }
+  #logout {
+    text-decoration: none;
+    font-size: 1.1em;
+    color: white;
+  }
+
+/* main content */
+.main_content {
+  width: 100%;
+  padding: 2%;
+  margin: 0;
+  text-align: center;
+  background: aliceblue;
+}
+
+/*for full page */
+.section1 {
+  width: 100%;
+}
+/* main content for 2 columns */
+.left, .right {
+  text-align: left;
+  display: inline-block;
+  width: 45%;
+  margin: 1%;
+  vertical-align: top;
+}
+  h3 {
+    text-align: center;
+    font-family: 'Rock Salt', cursive;
+  }
+  /* if tables */
+  .table {
+    margin: auto;
+    width: 70%;
+  }
+  th {
+    text-align: center;
+  }
+  /* if a-tag buttons */
+  #hrefbtn {
+    text-decoration: none;
+    color: white;
+  }
+  .btn {
+    background: #FF7C00;
+    border-color: #FFB773;
+    display: block;
+    margin: auto;
+  }
+
+/* for books */
+.title {
+  text-decoration: underline;
+  font-size: 1.2em;
+}
+.posttime {
+  font-style: italic;
+  font-size: 0.8em;
+}
+
+/* for book list */
+.booklist {
+  padding: 1%;
+  margin-left: 2%;
+  width: 45%;
+  overflow-y: scroll;
+  height: 200px;
+  border: 1px solid lightgrey;
+}
+
+
+
+
+/*.details {
+  width: 50%;
+  margin: auto;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 15px;
+}*/
