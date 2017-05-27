@@ -25,7 +25,7 @@ class UserManager(models.Manager):
         #name validation
         if len(postData['first_name']) < 2 or not postData['first_name'].isalpha():
             errors.append('Invalid first name')
-        if len(postData['last_name']) < 2 or not ln.isalpha():
+        if len(postData['last_name']) < 2 or not postData['last_name'].isalpha():
             errors.append('Invalid last name')
         #email validation
         if not EMAIL_REGEX.match(postData['email']):
