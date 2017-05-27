@@ -26,8 +26,8 @@ class BookReviewManager(models.Manager):
         except ObjectDoesNotExist:
             book = Book.objects.create(title=postData['title'])
             book.authors.add(author)
-        # user = User.objects.get(id=postData['user'])
-        # return BookReview.objects.create(book=book,review=postData['review'],user=user, rating=postData['rating'])
+        user = User.objects.get(id=postData['user'])
+        return BookReview.objects.create(book=book,review=postData['review'],user=user, rating=postData['rating'])
     def addReview(self, postData):
         book = Book.objects.get(id=postData['book_id'])
         user = User.objects.get(id=postData['user'])

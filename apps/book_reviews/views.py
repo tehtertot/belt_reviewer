@@ -48,6 +48,8 @@ def addReview(request, id):
             messages.add_message(request, messages.ERROR, review)
             return redirect('books:book', id=id)
         return redirect('books:index')
+    else:
+        return redirect('books:book', id=id)
 
 def viewUser(request, id):
     context = { 'user': User.objects.get(id=id) }

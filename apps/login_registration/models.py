@@ -17,16 +17,20 @@ class UserManager(models.Manager):
                 errors.append('Invalid password')
                 return errors
         except:
-            errors.append('No user with this password')
+            errors.append('No user registered with this email')
             return errors
 
     def register(self, postData):
         errors = []
         #name validation
-        if len(postData['first_name']) < 2 or not postData['first_name'].isalpha():
-            errors.append('Invalid first name')
-        if len(postData['last_name']) < 2 or not postData['last_name'].isalpha():
-            errors.append('Invalid last name')
+        if len(postData['first_name']) < 2:
+            errors.append('First name is too short')
+        if not postData['first_name'].isalpha():
+            errors.append('First name should contain only letters')
+        if len(postData['last_name']) < 2:
+            errors.append('Last name is too short')
+        if not postData['last_name'].isalpha():
+            errors.append('Last name should contain only letters')
         #email validation
         if not EMAIL_REGEX.match(postData['email']):
             errors.append('Invalid email')
@@ -38,31 +42,26 @@ class UserManager(models.Manager):
                 pass
         #birthdate validation
         try:
-            y, m, d = map(int, bd.split('-'))
-            postData['birthdate'] = datetime(y, m, d)
-            if postData['birthdate'] > datetime.now():
-                errors.append('Invalid birthdate')
+            y, m, d = map(int, postData['birthdate'].split('-'))
+            birthdate = datetime(y, m, d)
+            if birthdate > datetime.now():
+                errors.append('Birthdate must be before today')
         except:
-            errors.append('No birthdate entered')
+            errors.append('Birthdate field required')
 
         #password validation
         if postData['password'] != postData['confirm']:
             errors.append('Passwords do not match')
         if len(postData['password']) < 8:
-            errors.append('Invalid password')
+            errors.append('Password must be at least 8 characters long')
 
         #return new user if all fields valid
         if len(errors) == 0:
             hashedpw = bcrypt.hashpw(postData['password'].encode(), bcrypt.gensalt())
-            newUser = User.objects.create(first_name=postData['first_name'], last_name=postData['last_name'], email=postData['email'], password=hashedpw)
+            newUser = User.objects.create(first_name=postData['first_name'], last_name=postData['last_name'], email=postData['email'], password=hashedpw, birthdate=birthdate)
             return newUser
         #or return list of errors
         return errors
-    # def resetPassword(self, id, pw):
-    #     u = User.objects.get(id=id)
-    #     u.salt = bcrypt.gensalt()
-    #     u.password = bcrypt.hashpw(pw.encode(), u.salt)
-    #     u.save()
 
 class User(models.Model):
     first_name = models.CharField(max_length=100)
